@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "tutor-e-presave",
+  "private_key_id": "86761f5220a74d514bf175845c2c2b593f9306c9",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQC8y14Do6whHHel\nBubPI0etsY74Et+r/Z+SyiZ10f+l3zGVpiUtECw9l2sdC9iA5TPf2X5ZV0Qk43Wd\na/lsmHsyiX1JLmsB4EZdGyQ03spA0CnEwPuAYt3Phb6MGxHZcn9hTrGGq0q2YGXq\ntoQeA/uPaXpcW41p4si0sBwyhm+eLXz4FSDw8piYNA+JfDvcahQNvL80Mxy1Jsc5\nFsUkC2qk9al/JNAGKZDLFXWSDIAwjei2b8a+TK8y6eMKK4nSV6kymtrtkCyNIvvg\ns/+R221vYT7tEYMUvej3ZgoCxUeNAzLjTQl5OvGHbbJgXMD0lf55ezp5BRG3YWB7\nYs/9GSeTAgMBAAECggEAK5kxTFjbUsgurxsRaStmDawP7qT5J1BKLg1l5VaKGaWZ\n30u/kREHjm+tykbmiBmmKZ8h6QLYl0Y57pE1SAlMhgavOpuwFX5T8YNnkJgUj/Qi\neS/xxJvQSnDB6LwFmrgwx2lzYLyk48oOLy5YA1B7IwrCOZrg5N985xE2acqW8yl7\nDS/ALK4Q9xaqdzIrOiDwoK5gKHzodrjQuFmVSoiXrCRMU1Qagi4DIlqsgDoIMuYf\n+BGbGFxf5B/FyBRRS67TKv4H+DB6tQLyenTSDEicTSxx995+pVossN86Nbdr8xNt\nNMo13rLP4cfUcR8peTY+m1CFFGhmeFGE3ymLBpXblQKBgQDyABVzqJBD5cQWTqnJ\nPFo2lRbmYSZCmyDVAVTPRNshbRxwew5GIhGfSLjCAHMeAf1znD/3QDLwYVncnuIA\ngjOaBKrEOc65jxCvE96w1iEJGLv7CqIlMXHe40Exoh6du8fYWrZHMs/CO6ZaM+KF\nRXpZ7kyjLX3hirJaKrmAmA7djwKBgQDHt1Pde7M7mduRpQmZs8pdky/6QDFuc9H5\nz1HAnxdZjdhI1FAWEbisPpzCz5M8dm49mdWiR4QyFfsh5mbALUTAAwvn8gVHst1j\n213akVyfSnZs1r9VBuoieCWSOTp45AbJGEIA69pMSWgxnehddPnVLoco4jUK5g4o\n64uC3WabvQKBgE4DVucFFRS+Ujs6uqND0HU+FLbJ5LKeHbRtDHEQ6m9ZJEzibpSP\nUQz/PYhU6sdmrtUBLuG/EWzKhVSI56RwVMA29vHxDMJm62L1TdnF/bpX/emM4P6K\ndQH8Urz0XVhN+7u0aoSDTdR4tETp6wE5h5rMJmqINMdrldlZYpmg61HjAoGBAJ2W\nCpa5BLQCsz44+1pMg2FSwoi0Hk0JFqYG8HsNDV+cjQzqekbvtMg0n30YTRVoXZQ9\nzlQ+GhFrRr15D5qUHatkvABI9+GbQRWKAoR0LqGCH+/BgzeUPSr1oq++eGTriG8k\ntPAFKjsHsS91aeRUaM3N6NhZpYD0BjhDo9Ge4VgBAoGBALjlXwSz+ToXPqyC/Snc\nqMB6NE2wYoMbaSMPq2u+uS+6MQy4k4eXsjFAzUVso39uu8Dlls3icKb9P4UP7Pq4\nPdmXbqAUG7sfm/PuK52I6rVbDTTxoIGLnb2YafRfGTKRi2OsD/H7JfJVn9w5sOc1\nNs/2wLlOmj+xnXOTWIPaUg2P\n-----END PRIVATE KEY-----\n",
+  "client_email": "tutor-dataminer@tutor-e-presave.iam.gserviceaccount.com",
+  "client_id": "108537380615068679221",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/tutor-dataminer%40tutor-e-presave.iam.gserviceaccount.com"
+}
