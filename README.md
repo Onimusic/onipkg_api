@@ -8,19 +8,19 @@ A documentação completa do pacote está disponível em: [Pypi:oni_api_helper](
 Primeiramente faça a desinstalação do pacote presente em sua `venv`.
 
 ```bash
-pip uninstall oni_google_backup_helper
+pip uninstall oni_api_helper
 ```
 
 Após a desinstalação, instale o pacote atráves do código fonte modificado.
 
 ```bash
-pip install -e <path>/oni_google_backup_helper/
+pip install -e <path>/oni_api_helper/
 ```
 
 Teste a implementação feita em um projeto terceiro ou até mesmo usando os códigos de teste disponíveis. Após testar o código atual faça a desinstalação do pacote novamente.
 
 ```bash
-pip uninstall oni_google_backup_helper
+pip uninstall oni_google_api_helper
 ```
 
 Após o teste crie sua PR e envie para avaliação.
