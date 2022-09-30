@@ -13,7 +13,7 @@ setup(
     # Project name:
     name='oni_api_helper',
     # Packages to include in the distribution:
-    packages=['oni_api_helper', *find_packages(',')],
+    packages=find_packages('src', exclude=['tests']),
     # Project version number:
     version='1.0',
     # List a license for the project, eg. MIT License
