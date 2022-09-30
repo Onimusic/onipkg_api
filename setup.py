@@ -11,11 +11,12 @@ except Exception:
 
 setup(
     # Project name:
-    name='oni_api_helper',
+    name='oni_api',
     # Packages to include in the distribution:
-    packages=find_packages('src', exclude=['tests']),
+    packages=find_packages(where="src"),
+    package_dir={'': 'src'},
     # Project version number:
-    version='1.1',
+    version='1.0.2',
     # List a license for the project, eg. MIT License
     license='',
     # Short description of your library:
