@@ -2,7 +2,7 @@
 
 Retorna objeto json da requisição das API's trabalhadas até o momento.
 
-A documentação completa do pacote está disponível em: [Pypi:oni_api_helper](https://pypi.org/project/oni-api-helper/1.0/).
+A documentação completa do pacote está disponível em: [Pypi:oni_api_helper](https://pypi.org/project/oni-api-helper/).
 
 ## Como testar sua contribuíção antes de enviar uma PR
 Primeiramente faça a desinstalação do pacote presente em sua `venv`.
