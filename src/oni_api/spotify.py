@@ -167,6 +167,20 @@ class SpotifyPublic(SpotifyCredential):
         header = self.get_resource_header()
         return requests.get(endpoint, headers=header).json()
 
+    def get_isrc_tracks_from_playlist(self, playlist_id):
+        """
+
+        Args:
+            playlist_id: id da playlist
+
+        Returns: isrc de todos os tracks da playlist
+
+        """
+        endpoint = self.get_resource(resource_type='playlists', lookup_id=playlist_id,
+                                     search_type='fields=tracks.items(track(external_ids(isrc)))')
+        header = self.get_resource_header()
+        return requests.get(endpoint, headers=header).json()
+
     def get_playlist(self, playlist_id, offset=0):
         """
 
@@ -182,7 +196,7 @@ class SpotifyPublic(SpotifyCredential):
         header = self.get_resource_header()
         return requests.get(endpoint, headers=header).json()
 
-    def get_search_artist_type_playlist(self, artist, offset=0):
+    def get_search_artist_playlist(self, artist, offset=0):
         """
 
         Args:
@@ -397,7 +411,7 @@ class SpotifyPrivate(SpotifyCredential):
         my_json = my_json.replace('}{', '},{')
         return json.loads(my_json)
 
-    def get_tracks(self) -> pd.DataFrame:
+    def get_tracks(self) -> dict:
         """
         Função que retorna o dataframe do endpoint tracks
         Args:
@@ -407,7 +421,7 @@ class SpotifyPrivate(SpotifyCredential):
         """
         return self.request2json(self.get_data_tracks())
 
-    def get_users(self) -> pd.DataFrame:
+    def get_users(self) -> dict:
         """
         Função que retorna o dataframe do endpoint users
         Args:
@@ -417,7 +431,7 @@ class SpotifyPrivate(SpotifyCredential):
         """
         return self.request2json(self.get_data_users())
 
-    def get_streams(self, country) -> pd.DataFrame:
+    def get_streams(self, country) -> dict:
         """
         Função que retorna o dataframe do endpoint streams para um país específico
         Args:
@@ -427,7 +441,7 @@ class SpotifyPrivate(SpotifyCredential):
         """
         return self.request2json(self.get_data_streams(country))
 
-    def get_sub_30_streams(self, country) -> pd.DataFrame:
+    def get_sub_30_streams(self, country) -> dict:
         """
         Função que retorna o dataframe do endpoint sub30_secs_streams para um país específico
         Args:
@@ -437,7 +451,7 @@ class SpotifyPrivate(SpotifyCredential):
         """
         return self.request2json(self.get_data_sub_30_secs_streams(country))
 
-    def get_aggregated_streams(self) -> pd.DataFrame:
+    def get_aggregated_streams(self) -> dict:
         """
         Função que retorna o dataframe do endpoint aggregated_streams
         Returns:

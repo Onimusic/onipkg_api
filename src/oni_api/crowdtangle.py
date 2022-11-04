@@ -28,28 +28,15 @@ class CrowdTangle:
         Returns: Payload com as informações colocadas
 
         """
-        payload = {}
-        if account_ids is not None:
-            payload['accountIds'] = account_ids
-        if count is not None:
-            payload['count'] = count
-        if end_date is not None:
-            payload['endDate'] = end_date
-        if list_id is not None:
-            payload['listId'] = list_id
-        if offset is not None:
-            payload['offset'] = offset
-        if order_by is not None:
-            payload['orderBy'] = order_by
-        if sort_by is not None:
-            payload['sortBy'] = sort_by
-        if start_date is not None:
-            payload['startDate'] = start_date
+        payload = {'accountIds': account_ids, 'count': count, 'endDate': end_date, 'listId': list_id, 'offset': offset,
+                   'orderBy': order_by, 'sortBy': sort_by, 'startDate': start_date}
+        payload = {k: v for k, v in payload.items() if v}
         return payload
 
-    def create_payload_post(self, accounts=None, branded_content=None, count=None, end_date=None, include_history=None,
-                            language=None, list_ids=None, min_interactions=None, offset=None, page_admin_top_country=None,
-                            search_term=None, sort_by=None, start_date=None, timeframe=None, types=None, verified=None):
+    def create_payload_posts(self, accounts=None, branded_content=None, count=None, end_date=None, include_history=None,
+                            language=None, list_ids=None, min_interactions=None, offset=None,
+                            page_admin_top_country=None, search_term=None, sort_by=None, start_date=None,
+                            timeframe=None, types=None, verified=None):
         """
         Gera payload para posteriormente fazer o request do endpoint
         Args:
@@ -73,13 +60,26 @@ class CrowdTangle:
         Returns:
 
         """
-
         payload = {'accounts': accounts, 'brandedContent': branded_content, 'count': count, 'endDate': end_date,
                    'includeHistory': include_history, 'language': language, 'listIds': list_ids,
                    'minInteractions': min_interactions, 'offset': offset, 'pageAdminTopCountry': page_admin_top_country,
                    'searchTerm': search_term, 'sortBy': sort_by, 'startDate': start_date, 'timeframe': timeframe,
                    'types': types, 'verified': verified}
 
+        payload = {k: v for k, v in payload.items() if v}
+        return payload
+
+    @staticmethod
+    def create_payload_post(include_history):
+        """
+        Cria o payload que será utilizado na request
+        Args:
+            include_history: If you want to generate multiple samples of data for the post
+
+        Returns: Payload com as informações colocadas
+
+        """
+        payload = {'includeHistory': include_history}
         payload = {k: v for k, v in payload.items() if v}
         return payload
 
@@ -95,8 +95,12 @@ class CrowdTangle:
         return requests.get('https://api.crowdtangle.com/leaderboard', headers={'x-api-token': self.ct_token},
                             params=payload)
 
-    def make_request_post(self, payload=None):
+    def make_request_posts(self, payload=None):
         return requests.get('https://api.crowdtangle.com/posts', headers={'x-api-token': self.ct_token}, params=payload)
+
+    def make_request_post(self, post_id, payload):
+        return requests.get(f'https://api.crowdtangle.com/post/{post_id}', headers={'x-api-token': self.ct_token},
+                            params=payload)
 
     def get_leader(self, account_ids=None, count=None, end_date=None, list_id=None, offset=None, order_by=None,
                    sort_by=None, start_date=None):
@@ -119,7 +123,7 @@ class CrowdTangle:
         response = self.make_request_leader(payload)
         return response.json()
 
-    def get_post(self, accounts=None, branded_content=None, count=None, end_date=None, include_history=None,
+    def get_posts(self, accounts=None, branded_content=None, count=None, end_date=None, include_history=None,
                  language=None, list_ids=None, min_interactions=None, offset=None, page_admin_top_country=None,
                  search_term=None, sort_by=None, start_date=None, timeframe=None, types=None, verified=None):
         """
@@ -146,9 +150,21 @@ class CrowdTangle:
 
         """
         # Define os valores das variáveis
-        payload = self.create_payload_post(accounts, branded_content, count, end_date, include_history, language,
+        payload = self.create_payload_posts(accounts, branded_content, count, end_date, include_history, language,
                                            list_ids, min_interactions, offset, page_admin_top_country, search_term,
                                            sort_by, start_date, timeframe, types, verified)
         # Faz o request com os valores definidos
-        response = self.make_request_post(payload)
+        response = self.make_request_posts(payload)
+        return response.json()
+
+    def get_post(self, post_id=None, include_history=False):
+        """
+
+        Args:
+            post_id: id of post on format  [number]_[number]
+            include_history: If you want to generate multiple samples of data for the post
+        Returns: organized information
+        """
+        payload = self.create_payload_post(include_history)
+        response = self.make_request_post(post_id, payload)
         return response.json()

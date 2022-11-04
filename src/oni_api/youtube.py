@@ -1,6 +1,7 @@
 from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
 from googleapiclient.http import MediaFileUpload
+from typing import List
 
 class YoutubeAnalytics:
     """
@@ -226,7 +227,7 @@ class YoutubeDataApi:
         """
         return build('youtube', 'v3', developerKey=credential_key)
 
-    def list_channels(self, channel_id: str, part: list[str]):
+    def list_channels(self, channel_id: str, part: List[str]):
         """
         Função que retorna estatísticas básicas do canal
         Args:
@@ -238,7 +239,7 @@ class YoutubeDataApi:
         """
         return self.youtube_get.channels().list(id=channel_id, part=part, maxResults=50).execute()
 
-    def list_videos(self, video_id: str, part: list[str]):
+    def list_videos(self, video_id: str, part: List[str]):
         """
         Função que retorna informações primordiais do vídeo
         Args:
