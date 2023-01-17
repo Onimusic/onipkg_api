@@ -11,12 +11,12 @@ except Exception:
 
 setup(
     # Project name:
-    name='oni_api',
+    name='onipkg_api',
     # Packages to include in the distribution:
     packages=find_packages(where="src"),
     package_dir={'': 'src'},
     # Project version number:
-    version='1.0.11',
+    version='1.0.16',
     # List a license for the project, eg. MIT License
     license='',
     # Short description of your library:
