@@ -47,7 +47,7 @@ class CrowdTangle:
             payload['startDate'] = start_date
         return payload
 
-    def create_payload_post(self, accounts=None, branded_content=None, count=None, end_date=None, include_history=None,
+    def create_payload_posts(self, accounts=None, branded_content=None, count=None, end_date=None, include_history=None,
                             language=None, list_ids=None, min_interactions=None, offset=None, page_admin_top_country=None,
                             search_term=None, sort_by=None, start_date=None, timeframe=None, types=None, verified=None):
         """
@@ -95,7 +95,11 @@ class CrowdTangle:
         return requests.get('https://api.crowdtangle.com/leaderboard', headers={'x-api-token': self.ct_token},
                             params=payload)
 
-    def make_request_post(self, payload=None):
+    def make_request_post(self, payload=None, post_id=''):
+        return requests.get(f'https://api.crowdtangle.com/post/{post_id}', headers={'x-api-token': self.ct_token},
+                            params=payload)
+
+    def make_request_posts(self, payload=None):
         return requests.get('https://api.crowdtangle.com/posts', headers={'x-api-token': self.ct_token}, params=payload)
 
     def get_leader(self, account_ids=None, count=None, end_date=None, list_id=None, offset=None, order_by=None,
@@ -119,9 +123,24 @@ class CrowdTangle:
         response = self.make_request_leader(payload)
         return response.json()
 
-    def get_post(self, accounts=None, branded_content=None, count=None, end_date=None, include_history=None,
-                 language=None, list_ids=None, min_interactions=None, offset=None, page_admin_top_country=None,
-                 search_term=None, sort_by=None, start_date=None, timeframe=None, types=None, verified=None):
+    def get_post(self, include_history=None, post_id=''):
+        """
+        Returns the post with the id passed
+        Args:
+            post_id: id of the post
+            include_history: Boolean to include or exclude history data
+
+        Returns: organized information
+
+        """
+        payload = {'includeHistory': include_history}
+        response = self.make_request_post(payload=payload, post_id=post_id)
+        print(response)
+        return response.json()
+
+    def get_posts(self, accounts=None, branded_content=None, count=None, end_date=None, include_history=None,
+                  language=None, list_ids=None, min_interactions=None, offset=None, page_admin_top_country=None,
+                  search_term=None, sort_by=None, start_date=None, timeframe=None, types=None, verified=None):
         """
 
         Args:
@@ -146,9 +165,9 @@ class CrowdTangle:
 
         """
         # Define os valores das variáveis
-        payload = self.create_payload_post(accounts, branded_content, count, end_date, include_history, language,
+        payload = self.create_payload_posts(accounts, branded_content, count, end_date, include_history, language,
                                            list_ids, min_interactions, offset, page_admin_top_country, search_term,
                                            sort_by, start_date, timeframe, types, verified)
         # Faz o request com os valores definidos
-        response = self.make_request_post(payload)
+        response = self.make_request_posts(payload)
         return response.json()

@@ -16,7 +16,7 @@ setup(
     packages=find_packages(where="src"),
     package_dir={'': 'src'},
     # Project version number:
-    version='1.0.19',
+    version='1.0.24',
     # List a license for the project, eg. MIT License
     license='',
     # Short description of your library:
