@@ -135,7 +135,6 @@ class CrowdTangle:
         """
         payload = {'includeHistory': include_history}
         response = self.make_request_post(payload=payload, post_id=post_id)
-        print(response)
         return response.json()
 
     def get_posts(self, accounts=None, branded_content=None, count=None, end_date=None, include_history=None,
