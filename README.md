@@ -2,25 +2,23 @@
 
 Retorna objeto json da requisição das API's trabalhadas até o momento.
 
-A documentação completa do pacote está disponível em: [Pypi:oni_api](https://pypi.org/project/oni-api/).
-
 ## Como testar sua contribuíção antes de enviar uma PR
 Primeiramente faça a desinstalação do pacote presente em sua `venv`.
 
 ```bash
-pip uninstall oni_api
+pip uninstall onipkg_api
 ```
 
 Após a desinstalação, instale o pacote atráves do código fonte modificado.
 
 ```bash
-pip install -e <path>/oni_api/
+pip install -e <path>/onipkg_api/
 ```
 
 Teste a implementação feita em um projeto terceiro ou até mesmo usando os códigos de teste disponíveis. Após testar o código atual faça a desinstalação do pacote novamente.
 
 ```bash
-pip uninstall oni_api
+pip uninstall onipkg_api
 ```
 
 Após o teste crie sua PR e envie para avaliação.

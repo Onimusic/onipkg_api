@@ -1,9 +1,12 @@
 import base64
 import datetime
 import gzip
+from typing import List
+
 import pandas as pd
 import requests
 import json
+import io
 
 
 class SpotifyCredential:
@@ -14,7 +17,7 @@ class SpotifyCredential:
     range_api_success = [200, 201, 202, 203, 204, 205, 206, 207, 208, 226]
     token_url = "https://accounts.spotify.com/api/token"
 
-    def __init__(self, client_id, client_secret):
+    def __init__(self, client_id: str, client_secret:str):
         """
         Função que recebe os parametros necessários para a autenticação
         Args:
@@ -300,7 +303,8 @@ class SpotifyPrivate(SpotifyCredential):
     Classe que faz todas as funções relacionadas com a API do spotify, desde autenticação até a chamada do API Privada
     """
 
-    def __init__(self, client_id, client_secret, licensor, access_token_const, date):
+    def __init__(self, client_id: str, client_secret: str, licensor: str, access_token_const: str,
+                 date: datetime.datetime.date):
         """
         Função que recebe os parametros necessários para a autenticação
         Args:
@@ -316,7 +320,7 @@ class SpotifyPrivate(SpotifyCredential):
         self.licensor = licensor
         self.access_token_const = access_token_const
 
-    def get_data_streams(self, country) -> requests.models.Response:
+    def get_data_streams(self, country: str) -> requests.models.Response:
         """
         Faz a request para o endpoint streams
         Args:
@@ -382,14 +386,16 @@ class SpotifyPrivate(SpotifyCredential):
         return {"Authorization": f"Bearer {self.access_token_const}"}
 
     @staticmethod
-    def request2json(request):
+    def request2json(request: requests.models.Response) -> List[dict]:
         """
-        Função que transforma a resposta da request em um dataframe
+        Função que transforma a resposta da request em um json
         Args:
             request: request feita para o endpoint
         Returns:
-            DataFrame com os dados da request
+            Json com a resposta da request
         """
+        if request.status_code != 200:
+            print(f'Erro na requisição: {request}')
         decompressed_response = gzip.decompress(request.content)
         my_json = decompressed_response.decode('utf-8')
         my_json = f'[{my_json}]'
@@ -397,50 +403,50 @@ class SpotifyPrivate(SpotifyCredential):
         my_json = my_json.replace('}{', '},{')
         return json.loads(my_json)
 
-    def get_tracks(self) -> pd.DataFrame:
+    def get_tracks(self) -> List[dict]:
         """
-        Função que retorna o dataframe do endpoint tracks
+        Função que retorna objeto Json do endpoint tracks
         Args:
             type: Extensão do arquivo que vai ser escrito
         Returns:
-            DataFrame tracks
+            Json tracks
         """
         return self.request2json(self.get_data_tracks())
 
-    def get_users(self) -> pd.DataFrame:
+    def get_users(self) -> List[dict]:
         """
-        Função que retorna o dataframe do endpoint users
+        Função que retorna objeto Json do endpoint users
         Args:
             type: Extensão do arquivo que vai ser escrito
         Returns:
-            DataFrame users
+            Json users
         """
         return self.request2json(self.get_data_users())
 
-    def get_streams(self, country) -> pd.DataFrame:
+    def get_streams(self, country: str) -> List[dict]:
         """
-        Função que retorna o dataframe do endpoint streams para um país específico
+        Função que retorna o objeto Json do endpoint streams para um país específico
         Args:
             country: Code of the country
         Returns:
-            DataFrame streams de um país
+            Json streams de um país
         """
         return self.request2json(self.get_data_streams(country))
 
-    def get_sub_30_streams(self, country) -> pd.DataFrame:
+    def get_sub_30_streams(self, country: str) -> List[dict]:
         """
-        Função que retorna o dataframe do endpoint sub30_secs_streams para um país específico
+        Função que retorna o objeto Json do endpoint sub 30 secs streams para um país específico
         Args:
             country: Code of the country
         Returns:
-            DataFrame sub30_secs_streams streams de um país
+            Json sub 30 secs streams de um país
         """
         return self.request2json(self.get_data_sub_30_secs_streams(country))
 
-    def get_aggregated_streams(self) -> pd.DataFrame:
+    def get_aggregated_streams(self) -> List[dict]:
         """
-        Função que retorna o dataframe do endpoint aggregated_streams
+        Função que retorna o objeto Json do endpoint aggregated streams
         Returns:
-            DataFrame aggregated_streams
+            Json aggregated streams
         """
         return self.request2json(self.get_data_aggregated_streams())
