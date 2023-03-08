@@ -16,7 +16,7 @@ setup(
     packages=find_packages(where="src"),
     package_dir={'': 'src'},
     # Project version number:
-    version='1.0.31',
+    version='1.0.33',
     # List a license for the project, eg. MIT License
     license='',
     # Short description of your library:
@@ -48,6 +48,7 @@ setup(
         'idna',
         'numpy',
         'pandas',
+        'pandas-gbq',
         'protobuf',
         'pyasn1',
         'pyasn1-modules',
