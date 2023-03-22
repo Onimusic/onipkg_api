@@ -13,7 +13,7 @@ class BigQuery:
         self.project = project_name
         pandas_gbq.context.project = self.project
 
-    def read_yt_basic(self, query: str) -> pd.DataFrame:
+    def read(self, query: str) -> pd.DataFrame:
         """
         Método que faz consulta SQL de uma tabela no Big Query
         Args:
@@ -23,7 +23,7 @@ class BigQuery:
         """
         return pd.read_gbq(query=query, project_id=self.project)
 
-    def send_bq(self, df: pd.DataFrame, table_name: str, table_schema: list[dict], how: str = 'append'):
+    def send(self, df: pd.DataFrame, table_name: str, table_schema: list[dict], how: str = 'append'):
         """
         Função que envia os dados para o bigquery
         Args:

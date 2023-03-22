@@ -69,6 +69,7 @@ ntlm-auth==1.4.0
 numpy==1.23.3
 oauthlib==3.2.0
 olefile==0.46
+oni-notifications-helper @ git+https://github.com/Onimusic/oni_notifications_helper.git@b57ae75eec321b6f56b6a47b7843370ae6aa1780
 packaging==23.0
 pandas==1.5.0
 pandas-gbq==0.19.1
