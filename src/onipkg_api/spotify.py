@@ -2,11 +2,10 @@ import base64
 import datetime
 import gzip
 from typing import List
-
-import pandas as pd
+import oni_notifications_helper.onitificator_telegram
 import requests
 import json
-import io
+import time
 
 
 class SpotifyCredential:
@@ -17,7 +16,7 @@ class SpotifyCredential:
     range_api_success = [200, 201, 202, 203, 204, 205, 206, 207, 208, 226]
     token_url = "https://accounts.spotify.com/api/token"
 
-    def __init__(self, client_id: str, client_secret:str):
+    def __init__(self, client_id: str, client_secret:str, telegram_bot_token: str, telegram_chat_id: str):
         """
         Função que recebe os parametros necessários para a autenticação
         Args:
@@ -26,6 +25,8 @@ class SpotifyCredential:
         """
         self.client_id = client_id
         self.client_secret = client_secret
+        self.telegram_bot_token = telegram_bot_token
+        self.telegram_chat_id = telegram_chat_id
 
     def get_client_credentials(self):
         """
@@ -69,8 +70,9 @@ class SpotifyCredential:
         token_headers = self.get_token_headers()
         r = requests.post(token_url, data=token_data, headers=token_headers, allow_redirects=True, verify=True)
         if r.status_code not in range(200, 299):
-            raise Exception("Could not authenticate client.")
-            # return False
+            oni_notifications_helper.onitificator_telegram.send_message(
+                self.telegram_bot_token, self.telegram_chat_id,
+                f'Erro na autenticacao da Api Spotify. Status code = {r.status_code} - {r.text}')
         data = r.json()
         now = datetime.datetime.now()
         access_token = data['access_token']
@@ -111,14 +113,14 @@ class SpotifyPublic(SpotifyCredential):
     """
     Classe que faz todas as funções relacionadas com a API do spotify, desde autenticação até a chamada do API
     """
-    def __init__(self, client_id, client_secret):
+    def __init__(self, client_id, client_secret, telegram_bot_token, telegram_chat_id):
         """
         Função que recebe os parametros necessários para a autenticação
         Args:
             client_id: Credential id client
             client_secret: Credential secret client
         """
-        super().__init__(client_id, client_secret)
+        super().__init__(client_id, client_secret, telegram_bot_token, telegram_chat_id)
 
     @staticmethod
     def get_resource(lookup_id, resource_type='', version='v1', api_lookup_type=None, extra_filter=None, market=None,
@@ -284,6 +286,12 @@ class SpotifyPublic(SpotifyCredential):
         """
         endpoint = self.get_resource(lookup_id='tracks', search_type=f'ids={track_ids}&limit=50')
         header = self.get_resource_header()
+        while requests.get(endpoint, headers=header).status_code == 429:
+            oni_notifications_helper.onitificator_telegram.send_message(
+                self.telegram_bot_token, self.telegram_chat_id,
+                'Rate limit excedida na Api Spotify Public para track duration aguardando 10 minuto para'
+                'nova requisição')
+            time.sleep(600)
         return requests.get(endpoint, headers=header).json()
 
     def get_several_artists(self, artist_id):
@@ -304,7 +312,7 @@ class SpotifyPrivate(SpotifyCredential):
     """
 
     def __init__(self, client_id: str, client_secret: str, licensor: str, access_token_const: str,
-                 date: datetime.datetime.date):
+                 date: datetime.datetime.date, telegram_bot_token: str, telegram_chat_id: str):
         """
         Função que recebe os parametros necessários para a autenticação
         Args:
@@ -312,7 +320,7 @@ class SpotifyPrivate(SpotifyCredential):
             client_id:
             day: Dia da data de requisição
         """
-        super().__init__(client_id, client_secret)
+        super().__init__(client_id, client_secret, telegram_bot_token, telegram_chat_id)
         self.year = date.strftime('%Y')
         self.month = date.strftime('%m')
         self.day = date.strftime('%d')
