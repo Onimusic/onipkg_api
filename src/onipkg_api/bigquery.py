@@ -1,6 +1,8 @@
 import pandas as pd
 import pandas_gbq
 from google.oauth2 import service_account
+from typing import List
+
 
 
 class BigQuery:
@@ -23,7 +25,7 @@ class BigQuery:
         """
         return pd.read_gbq(query=query, project_id=self.project)
 
-    def send(self, df: pd.DataFrame, table_name: str, table_schema: list[dict], how: str = 'append'):
+    def send(self, df: pd.DataFrame, table_name: str, table_schema: List[dict], how: str = 'append'):
         """
         Função que envia os dados para o bigquery
         Args:

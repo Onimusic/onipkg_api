@@ -69,10 +69,14 @@ class SpotifyCredential:
         token_data = self.get_token_data()
         token_headers = self.get_token_headers()
         r = requests.post(token_url, data=token_data, headers=token_headers, allow_redirects=True, verify=True)
-        if r.status_code not in range(200, 299):
+        if r.status_code == 503:
             oni_notifications_helper.onitificator_telegram.send_message(
                 self.telegram_bot_token, self.telegram_chat_id,
-                f'Erro na autenticacao da Api Spotify. Status code = {r.status_code} - {r.text}')
+                'Servidor sobrecarregado iniciando nova tentativa de conexão em 10 segundos')
+            time.sleep(10)
+            raise Exception('Servidor sobrecarregado')
+        elif r.status_code not in [200, 201, 202, 203, 204, 205, 206, 207, 208, 226]:
+            raise Exception('Não foi possível realizar a conexão com o servidor')
         data = r.json()
         now = datetime.datetime.now()
         access_token = data['access_token']
