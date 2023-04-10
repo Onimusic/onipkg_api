@@ -239,6 +239,18 @@ class YoutubeDataApi:
         """
         return self.youtube_get.channels().list(id=channel_id, part=part, maxResults=50).execute()
 
+    def list_playlist_items(self, playlist_id: str, part: List[str]):
+        """
+        Função que retorna estatísticas básicas do canal
+        Args:
+            playlist_id: id da playlist do youtube
+            part: Recursos que deseja que tenha no json
+
+        Returns:
+
+        """
+        return self.youtube_get.playlistItems().list(playlistId=playlist_id, part=part, maxResults=50).execute()
+
     def list_videos(self, video_id: str, part: List[str]):
         """
         Função que retorna informações primordiais do vídeo
