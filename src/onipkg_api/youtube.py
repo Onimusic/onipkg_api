@@ -21,7 +21,6 @@ class YoutubeAnalytics:
         """
         return build('youtubereporting', 'v1', credentials=self.credentials)
 
-
     # Remove keyword arguments that are not set.
     @staticmethod
     def remove_empty_kwargs(**kwargs):

@@ -59,7 +59,7 @@ class CrowdTangle:
             end_date: Data final que o post foi criado
             include_history: Boolean to include or exclude history data
             language: Code of language of post
-            list_ids: Id that contains a set of account ids
+            list_ids: id that contains a set of account ids
             min_interactions: Filters items that have had at least d interactions
             offset: Offset to start the search used to paginate
             page_admin_top_country: Limits to only posts where the page is set to the country
@@ -79,7 +79,7 @@ class CrowdTangle:
                    'minInteractions': min_interactions, 'offset': offset, 'pageAdminTopCountry': page_admin_top_country,
                    'searchTerm': search_term, 'sortBy': sort_by, 'startDate': start_date, 'timeframe': timeframe,
                    'types': types, 'verified': verified}
-
+        # Constoi o corpo paenas com os campos nao none
         payload = {k: v for k, v in payload.items() if v}
         return payload
 

@@ -4,7 +4,6 @@ from google.oauth2 import service_account
 from typing import List
 
 
-
 class BigQuery:
     """
     Classe que gerência as tabelas do big query permitindo a leitura e envio de tabelas
@@ -17,7 +16,7 @@ class BigQuery:
 
     def read(self, query: str) -> pd.DataFrame:
         """
-        Método que faz consulta SQL de uma tabela no Big Query
+        Método que faz consulta SQL com base na SQL construida e retorna o dataframe com as informações
         Args:
             query: Consulta SQL
         Returns:
