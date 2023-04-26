@@ -16,7 +16,7 @@ class SpotifyCredential:
     range_api_success = [200, 201, 202, 203, 204, 205, 206, 207, 208, 226]
     token_url = "https://accounts.spotify.com/api/token"
 
-    def __init__(self, client_id: str, client_secret:str, telegram_bot_token: str, telegram_chat_id: str):
+    def __init__(self, client_id: str, client_secret: str, telegram_bot_token: str, telegram_chat_id: str):
         """
         Função que recebe os parametros necessários para a autenticação
         Args:
@@ -69,11 +69,11 @@ class SpotifyCredential:
         token_data = self.get_token_data()
         token_headers = self.get_token_headers()
         r = requests.post(token_url, data=token_data, headers=token_headers, allow_redirects=True, verify=True)
+        # Codigo 503 significa servidor nao disponivel
         if r.status_code == 503:
             oni_notifications_helper.onitificator_telegram.send_message(
                 self.telegram_bot_token, self.telegram_chat_id,
                 'Servidor sobrecarregado iniciando nova tentativa de conexão em 10 segundos')
-            time.sleep(10)
             raise Exception('Servidor sobrecarregado')
         elif r.status_code not in [200, 201, 202, 203, 204, 205, 206, 207, 208, 226]:
             raise Exception('Não foi possível realizar a conexão com o servidor')
@@ -145,6 +145,7 @@ class SpotifyPublic(SpotifyCredential):
         Returns: Dict com as informações que foram requesitadas pelo metodo em que a função foi utilizada
 
         """
+        # Realiza-se a montagem do endpoint de acordo com os campos passados e os campos None
         endpoint = f"https://api.spotify.com/{version}/{resource_type}/{lookup_id}"
         if api_lookup_type is not None:
             endpoint = f"https://api.spotify.com/{version}/{resource_type}/{lookup_id}/{api_lookup_type}"
@@ -408,18 +409,20 @@ class SpotifyPrivate(SpotifyCredential):
         """
         if request.status_code != 200:
             print(f'Erro na requisição: {request}')
+        # Deszipa o arquivo
         decompressed_response = gzip.decompress(request.content)
+        # Decoding do arquivo para utf-8
         my_json = decompressed_response.decode('utf-8')
+        # Corrige os caracteres para ficar em fomato json
         my_json = f'[{my_json}]'
         my_json = my_json.replace('\n', '')
         my_json = my_json.replace('}{', '},{')
+        # Transforma a string em json pelo metodo json.loads
         return json.loads(my_json)
 
     def get_tracks(self) -> List[dict]:
         """
         Função que retorna objeto Json do endpoint tracks
-        Args:
-            type: Extensão do arquivo que vai ser escrito
         Returns:
             Json tracks
         """
@@ -428,8 +431,6 @@ class SpotifyPrivate(SpotifyCredential):
     def get_users(self) -> List[dict]:
         """
         Função que retorna objeto Json do endpoint users
-        Args:
-            type: Extensão do arquivo que vai ser escrito
         Returns:
             Json users
         """
