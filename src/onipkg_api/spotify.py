@@ -22,6 +22,8 @@ class SpotifyCredential:
         Args:
             client_id: Credential id client
             client_secret: Credential secret client
+            telegram_bot_token: Token do bot do telegram
+            telegram_chat_id: Id do chat do telegram
         """
         self.client_id = client_id
         self.client_secret = client_secret
@@ -133,7 +135,7 @@ class SpotifyPublic(SpotifyCredential):
         Recebe os parametros que utilizaremos na metodo de request da api e nos
         redireciona para qual metodo que queremos
         Args:
-            search_type:
+            search_type: tipo de pesquisa que queremos fazer
             lookup_id: id que sera utilizado na busca
             resource_type: tipo de busca que queremos fazer
             version: versão da api que utilizaremos (v1 como padrão)
@@ -322,8 +324,12 @@ class SpotifyPrivate(SpotifyCredential):
         Função que recebe os parametros necessários para a autenticação
         Args:
             date: Data da requisição
-            client_id:
-            day: Dia da data de requisição
+            client_id: Credencial do Spotify Private
+            client_secret: Credencial do Spotify Private
+            licensor: Credencial do Spotify Private
+            access_token_const: Credencial do Spotify Private
+            telegram_bot_token: Token do bot do telegram
+            telegram_chat_id: Id do chat do telegram
         """
         super().__init__(client_id, client_secret, telegram_bot_token, telegram_chat_id)
         self.year = date.strftime('%Y')

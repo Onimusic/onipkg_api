@@ -149,7 +149,7 @@ class CrowdTangle:
             end_date: End date the post was created
             include_history: Returns data with time series
             language: Code of the source language of the post
-            list_ids: Id that contains a set of account ids
+            list_ids: id that contains a set of account ids
             min_interactions: Filters items that have had at least d interactions
             offset: The offset of the return item used for paging
             page_admin_top_country: Limits to only posts where the page is set to the country
