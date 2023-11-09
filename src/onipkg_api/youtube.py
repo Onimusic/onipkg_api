@@ -290,21 +290,20 @@ class YoutubeDataApi:
         Returns:
 
         """
-        request_body = {
+        return {
             'snippet': {
                 'categoryI': category_id,
                 'title': title,
                 'description': description,
-                'tags': tags
+                'tags': tags,
             },
             'status': {
                 'privacyStatus': 'private',
                 'publishAt': published_date,
                 'selfDeclareMadeForKids': made_for_kids,
             },
-            'notifySubscribers': notify_subscribers
+            'notifySubscribers': notify_subscribers,
         }
-        return request_body
 
     def send_video(self, video_path, category_id, title, description, tags, published_date,
                    made_for_kids=False, notify_subscribers=False):
