@@ -311,6 +311,10 @@ class SpotifyPublic(SpotifyCredential):
                 'nova requisição')
             time.sleep(600)
             response = requests.get(endpoint, headers=header)
+        
+        # retornando um dict vazio caso ocorra erro na request
+        if response.status_code == 429:
+            return {}
         return response.json()
 
     def get_several_artists(self, artist_id):
