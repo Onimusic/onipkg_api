@@ -291,13 +291,27 @@ class SpotifyPublic(SpotifyCredential):
         """
         endpoint = self.get_resource(lookup_id='tracks', search_type=f'ids={track_ids}&limit=50')
         header = self.get_resource_header()
-        while requests.get(endpoint, headers=header).status_code == 429:
+        response = requests.get(endpoint, headers=header)
+        
+        attempt = 0
+        while response.status_code == 429:
+            
+            # caso o numero de tentativas exceda 4, envia uma mensagem de erro
+            if attempt == 4:
+                oni_notifications_helper.onitificator_telegram.send_message(
+                    self.telegram_bot_token, self.telegram_chat_id,
+                    'Rate limit excedida na Api Spotify Public para track duration tentativas esgotadas')
+                break
+            
+            # caso o numero de tentativas seja menor que 4, envia uma mensagem de erro e tenta novamente
+            attempt += 1
             oni_notifications_helper.onitificator_telegram.send_message(
                 self.telegram_bot_token, self.telegram_chat_id,
                 'Rate limit excedida na Api Spotify Public para track duration aguardando 10 minuto para'
                 'nova requisição')
             time.sleep(600)
-        return requests.get(endpoint, headers=header).json()
+            response = requests.get(endpoint, headers=header)
+        return response.json()
 
     def get_several_artists(self, artist_id):
         """
